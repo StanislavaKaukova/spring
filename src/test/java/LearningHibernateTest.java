@@ -29,7 +29,7 @@ public class LearningHibernateTest {
     @Test
     public void save() {
         Student student = new Student();
-        student.setName("Pesho");
+        student.setName("Lilia");
         student.setRegistrationDate(new Date());
 
         session.save(student);
