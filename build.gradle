@@ -2,29 +2,33 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE")
+    }
 }
 
 apply plugin: 'java'
-apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+group = 'com.amitph.spring'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
 
 repositories {
     mavenCentral()
     mavenLocal()
-
 }
 
 dependencies {
-    compile "org.hibernate:hibernate-core:3.6.6.Final"
-    compile "mysql:mysql-connector-java:8.0.16"
-    // https://mvnrepository.com/artifact/org.javassist/javassist
-    compile group: 'org.javassist', name: 'javassist', version: '3.15.0-GA'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile('mysql:mysql-connector-java:8.0.13')
 
-    compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.2.3-1'
-    compile group: 'javax.activation', name: 'activation', version: '1.1'
-    compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.0-api', version: '1.0.0.Final'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
     testCompile 'junit:junit:4.11', 'org.jmock:jmock:2.8.2', 'org.jmock:jmock-junit4:2.8.2'
 }
 
@@ -33,16 +37,7 @@ compileJava {
     targetCompatibility = '1.8'
 }
 
-war {
-    classpath = jar.outputs.files + configurations.runtime - configurations.providedRuntime
-}
-
-
-
-test {
-    // set heap size for the java.test JVM(s)
-    minHeapSize = '2g'
-    maxHeapSize = '4g'
-
-    jvmArgs "-XX:MaxPermSize=1g"
+bootJar {
+    baseName = 'gs-rest-service'
+    version =  '0.1.0'
 }

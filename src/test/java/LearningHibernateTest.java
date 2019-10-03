@@ -38,6 +38,7 @@ public class LearningHibernateTest {
     @Test
     public void getById() {
         Student result = (Student) session.get(Student.class , 1);
+        System.out.println(result);
         assertThat(result.getName(), equalTo("Ivan"));
     }
 
